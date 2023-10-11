@@ -4,7 +4,7 @@ Welcome back to Part 2 of my SQL Beginner Tutorial. Today, we’ll delve into da
 
 ## ER Diagram of the database movies_2019.db
 
-```
+```mermaid
 erDiagram              
     BOX_OFFICE_RESULTS {
         id INTEGER
