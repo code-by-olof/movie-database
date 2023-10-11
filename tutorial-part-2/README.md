@@ -4,7 +4,7 @@ Welcome back to Part 2 of my SQL Beginner Tutorial. Today, we’ll delve into da
 
 ## ER Diagram of the database movies_2019.db
 
-'''
+```
 erDiagram              
     BOX_OFFICE_RESULTS {
         id INTEGER
@@ -58,7 +58,7 @@ erDiagram
     DIRECTING }o--o{ DIRECTORS : "can direct several movies" 
     MOVIES ||--o{ BOX_OFFICE_RESULTS : "a movie can have several box office results"   
 
-'''
+```
 
 
 Read the article on Medium: https://medium.com/@olofbaage/sql-beginner-tutorial-part-2-data-types-and-designing-a-database-f6be58328978
