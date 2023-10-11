@@ -24,3 +24,54 @@ CREATE TABLE movies (
     rating REAL,
     PRIMARY KEY (id)
 );
+
+-- create table box office results
+CREATE TABLE box_office_results (
+    id INTEGER,
+    year INTEGER,
+    movie_id INTEGER,
+    national REAL,
+    international REAL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (movie_id) REFERENCES movies (id)
+);
+
+-- create table actors
+CREATE TABLE actors (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    birth_year INTEGER,
+    birth_month INTEGER,
+    birth_day INTEGER,
+    PRIMARY KEY (id)
+);
+
+-- create table acting
+CREATE TABLE acting (
+    movie_id INTEGER,
+    actor_id INTEGER,
+    type TEXT CHECK (type IN ('leading', 'supporting')),
+    FOREIGN KEY (movie_id) REFERENCES movies (id),
+    FOREIGN KEY (actor_id) REFERENCES actors (id)
+);
+
+-- create table directors
+CREATE TABLE directors (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    birth_year INTEGER,
+    birth_month INTEGER,
+    birth_day INTEGER,
+    PRIMARY KEY (id)
+);
+
+-- create table directing
+CREATE TABLE directing (
+    movie_id INTEGER,
+    director_id INTEGER,
+    type TEXT CHECK (type IN ('leading', 'supporting')),
+    FOREIGN KEY (movie_id) REFERENCES movies (id),
+    FOREIGN KEY (director_id) REFERENCES directors (id)
+);
