@@ -9,7 +9,55 @@ SQLite has 6 different data types:
 * **TEXT**: any string
 * **NUMERIC**: non-decimal or decimal number
 * **INTEGER**: non-decimal numbers (e.g., 0, 1, 2, 3, 4…)
+* **REAL**: decimal numbers
+* **BLOB**: Data is stored exactly as provided — SQLite does not attempt conversion to the column’s data type
+* **NULL**: value is unknown or missing
 
+Despite its data types, SQLite is a flexible dynamic type system, also known as type affinity. Essentially, it attempts to convert the provided data into the column’s data type if possible. To grasp this concept, let’s examine an example.
+
+```
+CREATE TABLE walking_dead (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT ,
+    age INTEGER,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO walking_dead (first_name, last_name, age)
+VALUES ("Rick", "Grimes", 37);
+
++------+------------+-----------+-----+
+|  id  | first_name | last_name | age |
++------+------------+-----------+-----+
+| 1    | Rick       | Grimes    | 37  |
++------+------------+-----------+-----+
+
+INSERT INTO walking_dead (first_name, last_name, age)
+VALUES
+("Abraham", "Ford", "fourty-three");
+
++------+------------+-----------+--------------+
+|  id  | first_name | last_name |     age      |
++------+------------+-----------+--------------+
+| 1    | Rick       | Grimes    | 37           |
+| 2    | Abraham    | Ford      | fourty-three |
++------+------------+-----------+--------------+
+
+SELECT typeof(age) FROM walking_dead WHERE id = 1;
++-------------+
+| typeof(age) |
++-------------+
+| integer     |
++-------------+
+
+SELECT typeof(age) FROM walking_dead WHERE id = 2;
++-------------+
+| typeof(age) |
++-------------+
+| text        |
++-------------+
+```
 
 
 ## ER Diagram of the database movies_2019.db
