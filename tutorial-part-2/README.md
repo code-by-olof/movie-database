@@ -202,3 +202,94 @@ movies has a relation to box_office_results, acting and directing. It is a 1:n-r
 The relation between movies and acting is n:n as well as the relation between actors and acting. A movie has several actors and and actor can be in several movies. The “”link-table” acting the connection between actors and movies. Therefore it has 2 FOREIGN KEYs: movie_id and actor_id. I added also a column called type. Here we will specify if an actor has a leading or a supporting role with the values ‘leading’ or ‘supporting’.
 
 The relation between movies and directing is n:1 and the relation between directing and directors is n:n. A movie should only have one director. But a director can make several movies. I could have saved the director directly in the movies table. But there maybe could be the case that a movie is for some reason directed by 2 directors. That would change the relation between movies and directing to n:n. But we could work with it without any additional changes in the database.
+
+I hope now, that you became and understanding of why it is important to think about corner cases or additional data such as movies from another year you might want or need to add in the future.
+
+## Installing SQLite
+Now that the concept is clear, we finally can start to work with SQLite. If you want to code along with me or try to create your very own exampled, you need to have SQLite installed on your computer:
+1. Go to https://www.sqlite.org/index.html
+2. Download and unzip it
+3. Save it in the folders where you want create you SQL projects
+
+To work with SQL you need a terminal. I recommend using VSCode (Visual Studio Code). You can open a terminal in VSCode with Terminal -> New Terminal.
+
+## Creating a database with SQLite
+We can start and end SQL with the following commands:
+
+```
+-- start a connection to the datbase movies_2019.db
+SQLite3 movies_2019.db
+
+-- end the connection to the database
+.quit
+```
+
+You can name your database of course however you prefer. The first time you want to connect to a database, SQL might ask you if you want to create the database.
+
+I always work with an extra SQL (somefile.sql). It is more comfortable to write SQL there and just copy it into the terminal. But you don’t need to do that.
+
+We can create a table with CREATE TABLE.
+
+```
+CREATE TABLE mytable (
+    columnname1 DATATYPE,
+    columnname2 DATATYPE
+);
+```
+
+CREATE TABLE is followed by the name of you table (not the database). In the brackets we add the columns, followed by the datatype. Even though, adding a datatype is optional, I recommend to always use a datatype. Every columns besides the last one has to be seperated by a comma. We finish the CREATE TABLE command with a semicolon.
+
+We can and should specify PRIMARY and FOREIGN KEYs:
+
+```
+CREATE TABLE mytable (
+    id INTEGER,
+    columnname2 DATATYPE,
+    othertable_id DATATYPE,
+    columnname3 DATATYPE,
+    PRIMARY KEY (id),
+    FOREIGN KEY (othertable_id) REFERENCES othertable (id)
+);
+```
+
+PRIMARY KEY (id) specifies that id is the PRIMARY. Since id has the datatype INTEGER SQL knows now that you want an id with autoincrement. That means, every time you add an entry to your table, SQL looks in the table what the highest id is and saves the new entry with (highest found id + 1) as value for id.
+
+If you delete an entry in your table, SQL will not fill this id again. It always choose the next value after the highest one. But of course you can add an entry and give it a specific id. We take a look at that in another part of the tutorial. For now we focus on creating the database.
+We specify that a column is a FOREIGN KEY with
+
+```
+FOREIGN KEY (othertable_id) REFERENCES othertable (id)
+```
+
+othertabele_id is the colum in the table your about to create, othertable is the name of the othertable you build a relation to and id is the name of the PRIMARY KEY in the other table.
+So let’s give it a try with the table movies.
+
+```
+-- start connection to the datbase movies_2019.db
+SQLite3 movies_2019.db
+
+-- create table movies 
+sqlite> CREATE TABLE movies (
+    id INTEGER,
+    name TEXT,
+    year INTEGER,
+    start_date TEXT,
+    length INTEGER,
+    rating TEXT,
+    PRIMARY KEY (id)
+);
+
+-- check what is saved in the SQL schema
+sqlite> .schema
+CREATE TABLE movies (
+    id INTEGER,
+    name TEXT,
+    year INTEGER,
+    start_date TEXT,
+    length INTEGER,
+    rating TEXT,
+    PRIMARY KEY (id)
+);
+sqlite> 
+```
+
