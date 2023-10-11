@@ -293,3 +293,152 @@ CREATE TABLE movies (
 sqlite> 
 ```
 
+Congratulations! You know now how to create a database and you added your very first table!
+I added all the column with an appropriate datatype as well as the PRIMARY KEY in the CREATE TABLE command. Then I looked up what is saved in the SQL schema with the command .schema and it showed exactly what I typed as result. So I did everything correct, didn’t I? Taking a closer look at the CREATE TABLE command I realise that I create the rating column with the datatype TEXT even though I planned a real here. What now? We can change the CREATE TABLE command and add the correct datatype to the column rating and try to create the table again. But that is not possible. SQL can’t just overwrite the table. If we want to recreate a table completely we have to delete the table first in the schema. For that we need the DROP TABLE command.
+
+```
+-- delete table movies from the database
+sqlite> DROP TABLE movies;
+
+-- create the table movies again
+sqlite> CREATE TABLE movies (
+    id INTEGER,
+    name TEXT,
+    year INTEGER,
+    start_date TEXT,
+    length INTEGER,
+    rating REAL,
+    PRIMARY KEY (id)
+);
+
+-- check what is saved in the SQL schema
+sqlite> .schema
+CREATE TABLE movies (
+    id INTEGER,
+    name TEXT,
+    year INTEGER,
+    start_date TEXT,
+    length INTEGER,
+    rating REAL,
+    PRIMARY KEY (id)
+);
+sqlite>
+```
+
+It seems a little bit harsh to delete the whole table instead of just changing the datatype or deleting only the column adding a new column. But the behaviour of ALTER TABLE needs a bit more explanation and background. Therefor I will cover that in another part of the tutorial.
+So let’s create the other tables of our database and then sum up what we covered today.
+
+```
+-- create table box office results
+sqlite> CREATE TABLE box_office_results (
+    id INTEGER,
+    year INTEGER,
+    movie_id INTEGER,
+    national REAL,
+    international REAL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (movie_id) REFERENCES movies (id)
+);
+sqlite>
+
+-- create table actors
+sqlite> CREATE TABLE actors (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    birth_year INTEGER,
+    birth_month INTEGER,
+    birth_day INTEGER,
+    PRIMARY KEY (id)
+);
+sqlite>
+
+-- create table directors
+sqlite> CREATE TABLE directors (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    birth_year INTEGER,
+    birth_month INTEGER,
+    birth_day INTEGER,
+    PRIMARY KEY (id)
+);
+sqlite>
+
+-- create table directing
+sqlite> CREATE TABLE directing (
+    movie_id INTEGER,
+    director_id INTEGER,
+    type TEXT CHECK (type IN ('leading', 'supporting')),
+    FOREIGN KEY (movie_id) REFERENCES movies (id),
+    FOREIGN KEY (director_id) REFERENCES directors (id)
+);
+sqlite>
+```
+
+Checking the SQL schema should result in:
+
+```
+sqlite> .schema
+CREATE TABLE movies (
+    id INTEGER,
+    name TEXT,
+    year INTEGER,
+    start_date TEXT,
+    length INTEGER,
+    rating REAL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE box_office_results (
+    id INTEGER,
+    year INTEGER,
+    movie_id INTEGER,
+    national REAL,
+    international REAL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (movie_id) REFERENCES movies (id)
+);
+CREATE TABLE actors (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    birth_year INTEGER,
+    birth_month INTEGER,
+    birth_day INTEGER,
+    PRIMARY KEY (id)
+);
+CREATE TABLE directors (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    birth_year INTEGER,
+    birth_month INTEGER,
+    birth_day INTEGER,
+    PRIMARY KEY (id)
+);
+CREATE TABLE directing (
+    movie_id INTEGER,
+    director_id INTEGER,
+    type TEXT CHECK (type IN ('leading', 'supporting')),
+    FOREIGN KEY (movie_id) REFERENCES movies (id),
+    FOREIGN KEY (director_id) REFERENCES directors (id)
+);
+sqlite> 
+```
+
+There is one thing I didn’t explain you yet:
+
+```
+type TEXT CHECK (type IN ('leading', 'supporting')),
+```
+
+With CHECK we can predefine what input values are allowed. In this case the table only accepts the values are ‘leading’ or ‘supporting”. Everything else would end in an error.
+
+## Sum up what we covered today
+
+* SQLite has 6 data types: **TEXT**, **NUMERIC**, **INTEGER**, **REAL**, **BLOB**, **NULL**
+* **CREATE TABLE** mytable (colum1, DATATYPE); creates a new table
+* **CHECK** can predefine allowed values
+* **DROP TABLE** mytable deletes a table from the database
+
+
