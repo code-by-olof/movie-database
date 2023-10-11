@@ -1,6 +1,16 @@
 # SQL-Beginner Tutorial Part 2: Data Types and Designing a Database
-
 Welcome back to Part 2 of my SQL Beginner Tutorial. Today, we’ll delve into data types and then proceed to design our first database together.
+
+## Data Types in SQLite
+
+Throughout this tutorial, I’ll primarily use SQLite. However, we’ll also take a short look on MySQL, MariaDB, and PostgreSQL.
+
+SQLite has 6 different data types:
+* **TEXT**: any string
+* **NUMERIC**: non-decimal or decimal number
+* **INTEGER**: non-decimal numbers (e.g., 0, 1, 2, 3, 4…)
+
+
 
 ## ER Diagram of the database movies_2019.db
 
