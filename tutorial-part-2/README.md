@@ -440,5 +440,12 @@ With CHECK we can predefine what input values are allowed. In this case the tabl
 * **CREATE TABLE** mytable (colum1, DATATYPE); creates a new table
 * **CHECK** can predefine allowed values
 * **DROP TABLE** mytable deletes a table from the database
+* **SQLite3 mydatabase.db** starts a connection to a database (and creates the database if not created yet)
+* **.schema** shows us the tables we have in the database
+* **.quit** ends the connection to the database
+
+In Part 3 of we will INSERT data into the movie database and learn how to SELECT with easy and nested queries.
+
+Happy coding.
 
 
