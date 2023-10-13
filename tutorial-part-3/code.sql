@@ -8,7 +8,6 @@ ADD category TEXT CHECK (category IN ('action', 'drama', 'animation', 'kids', 'c
     academy TEXT,
     name TEXT,
     category TEXT,
-    year INTEGER,
     PRIMARY KEY (id)    
  );
 
@@ -16,15 +15,17 @@ ADD category TEXT CHECK (category IN ('action', 'drama', 'animation', 'kids', 'c
     movie_id INTEGER,
     actor_id INTEGER,
     award_id INTEGER,
+    year INTEGER,
     FOREIGN KEY (movie_id) REFERENCES movies (id),
     FOREIGN KEY (actor_id) REFERENCES actors (id),
     FOREIGN KEY (award_id) REFERENCES awards (id)
  );
 
-  CREATE TABLE won_award (
+  CREATE TABLE won_award (   
     movie_id INTEGER,
     actor_id INTEGER,
     award_id INTEGER,
+    year INTEGER,
     FOREIGN KEY (movie_id) REFERENCES movies (id),
     FOREIGN KEY (actor_id) REFERENCES actors (id),
     FOREIGN KEY (award_id) REFERENCES awards (id)
